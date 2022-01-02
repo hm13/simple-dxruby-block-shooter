@@ -1,0 +1,56 @@
+{
+    "Ball": {
+        "x": 50,
+        "y": 50,
+        "vx": 5,
+        "vy": 5,
+        "w": 15,
+        "h": 15,
+        "c": "C_WHITE"
+    },
+    "Bar": {
+        "x": 300,
+        "y": 400,
+        "vx": 5,
+        "vy": null,
+        "w": 150,
+        "h": 20,
+        "c": "C_WHITE"
+    },
+    "WallTop": {
+        "x": 0,
+        "y": 0,
+        "vx": null,
+        "vy": null,
+        "w": 640,
+        "h": 2,
+        "c": "C_WHITE"
+    },
+    "WallBottom": {
+        "x": 0,
+        "y": 478,
+        "vx": null,
+        "vy": null,
+        "w": 640,
+        "h": 2,
+        "c": "C_WHITE"
+    },
+    "WallLeft": {
+        "x": 0,
+        "y": 0,
+        "vx": null,
+        "vy": null,
+        "w": 2,
+        "h": 480,
+        "c": "C_WHITE"
+    },
+    "WallRight": {
+        "x": 638,
+        "y": 0,
+        "vx": null,
+        "vy": null,
+        "w": 2,
+        "h": 480,
+        "c": "C_WHITE"
+    }
+}

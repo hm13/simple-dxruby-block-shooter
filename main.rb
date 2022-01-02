@@ -1,20 +1,29 @@
 require 'dxruby'
+require 'json'
 
-class Ball < Sprite
-    @@image= Image.load('images/ball32x32.png')
+class SpriteJsonInit < Sprite
+    attr_accessor :vx, :vy
+    protected :vx, :vy
 
     def initialize
-        super
-        self.x = 50
-        self.y = 50
-        self.image = @@image
-        @vx = 5
-        @vy = 5
-    end
+        all_config = File.open("config.json") do |j|
+            JSON.load(j)
+        end
 
+        config = all_config[self.class.to_s]
+
+        self.x = config["x"]
+        self.y = config["y"]
+        self.vx = config["vx"]
+        self.vy = config["vy"]
+        self.image = Image.new(config["w"],config["h"],eval(config["c"]))
+    end
+end
+
+class Ball < SpriteJsonInit
     def update
-        self.x += @vx
-        self.y += @vy
+        self.x += self.vx
+        self.y += self.vy
     end
 
     def hit(o)
@@ -27,47 +36,23 @@ class Ball < Sprite
         is_horizontal_shot = (o.image.width - self.center_x.abs < 0)
 
         if is_horizontal_shot
-            @vx = -@vx
+            self.vx = -self.vx
         else
-            @vy = -@vy
+            self.vy = -self.vy
         end
     end
 end
 
-class Bar < Sprite
-    @@image = Image.load('images/bar128x32.png')
-
-    def initialize
-        super
-        self.x = 300
-        self.y = 400
-        self.image = @@image
-    end
-
+class Bar < SpriteJsonInit
     def update
-        self.x += Input.x * 5
+        self.x += Input.x * self.vx
     end
 end
 
-class WallTop < Sprite
-    @@image = Image.new(640,2,C_BLUE)
-
-    def initialize
-        self.x = 0
-        self.y = 0
-        self.image = @@image
-    end
+class WallTop < SpriteJsonInit
 end
 
-class WallBottom < Sprite
-    @@image = Image.new(640,2,C_BLUE)
-
-    def initialize
-        self.x = 0
-        self.y = 478
-        self.image = @@image
-    end
-
+class WallBottom < SpriteJsonInit
     def hit(o)
         if o.instance_of?(Ball)
             o.vanish
@@ -75,24 +60,10 @@ class WallBottom < Sprite
     end
 end
 
-class WallLeft < Sprite
-    @@image = Image.new(2,480,C_BLUE)
-
-    def initialize
-        self.x = 0
-        self.y = 0
-        self.image = @@image
-    end
+class WallLeft < SpriteJsonInit
 end
 
-class WallRight < Sprite
-    @@image = Image.new(2,480,C_BLUE)
-
-    def initialize
-        self.x = 638
-        self.y = 0
-        self.image = @@image
-    end
+class WallRight < SpriteJsonInit
 end
 
 objects = [
