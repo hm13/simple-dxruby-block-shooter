@@ -22,6 +22,7 @@ class Ball < Sprite
 
         # Estimate direction the Ball(self) shot the object(o).
         # Inaccruate, but simple algorithm.
+        # See https://miro.com/app/board/uXjVOYSvPAI=/ for details.
         is_horizontal_shot = ((o.x + o.center_x) - (self.x + self.center_x)).abs > (o.image.width / 2)
 
         if is_horizontal_shot
@@ -32,9 +33,11 @@ class Ball < Sprite
 
         if o.instance_of?(Bar)
             # Calculate how far Ball(self) off from the center of the Bar(o) (in -0.5 ~ 0.5).
-            pos = ((self.x + self.center_x) - (o.x + o.center_x)).to_f / o.image.width
+            # See https://miro.com/app/board/uXjVOYSvPAI=/ for details.
+            d = (self.x + self.center_x) - (o.x + o.center_x)
+            pos = d.to_f / o.image.width
 
-            # Invert the result depending on @sign_x
+            # Flip the result depending on @sign_x
             pos = @sign_x * pos
 
             if pos < -0.4
